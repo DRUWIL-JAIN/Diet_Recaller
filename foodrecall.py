@@ -13,6 +13,7 @@ from tensorflow.keras.models import load_model
 import requests
 import json
 from object_detector import *
+import gdown
 
 class HomogeneousBgDetector():
     def __init__(self):
@@ -100,7 +101,19 @@ def predict_dir(filedir, model):
 
 
 # Load the saved model
-model = tf.keras.models.load_model('C:\\Users\\Druwil Jain\\CV Project\\img_classification.h5')
+
+model_url = 'https://drive.google.com/uc?id=1VOZ1gz6xAv6Xnigp8UCYVuaLfqehIPG5'
+model_path = 'img_classification.h5'
+
+if not os.path.exists(model_path):
+    st.warning("Downloading the model. Please wait...")
+    gdown.download(model_url, model_path, quiet=False)
+    st.success("Model downloaded successfully!")
+
+# Load the saved model
+model = tf.keras.models.load_model(model_path)
+
+# model = tf.keras.models.load_model('C:\\Users\\Druwil Jain\\CV Project\\img_classification.h5')
 
 # Define the food categories
 category = {
